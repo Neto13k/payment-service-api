@@ -1,11 +1,12 @@
 import dotenv from 'dotenv'
 import express, { Request, Response } from 'express';
-
+import categoryRoutes from './routes/categoryRoutes';
 dotenv.config();
 
 const app = express();
-
 app.use(express.json());
+
+app.use('/categories', categoryRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Olá do servidor TypeScript!');
