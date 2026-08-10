@@ -1,6 +1,6 @@
 import pool from '../db/db'
 import { Customer } from '../types/index'
-import { sendWelcomeEmail, sendUpdateEmail } from '../services/emailService'
+import { sendWelcomeEmail, sendUpdateEmail, sendDeletionEmail } from '../services/emailService'
 
 async function getAllCustomers(): Promise<Customer[]> {
     try {
@@ -54,8 +54,22 @@ async function updateCustomer(id: number, customer: Customer): Promise<Customer 
 
 async function deleteCustomer(id: number): Promise<boolean> {
     try {
+        // Buscar o cliente antes de deletar para obter o nome e e-mail
+        const customer = await getCustomerById(id);
+        if (!customer) {
+            return false;
+        }
+
+        // Deletar o cliente
         const result = await pool.query('DELETE FROM customers WHERE id = $1', [id]);
-        return (result.rowCount ?? 0) > 0;
+
+        if ((result.rowCount ?? 0) > 0) {
+            // Enviar e-mail de exclusão
+            await sendDeletionEmail(customer.name, customer.email);
+            return true;
+        }
+        return false;
+
     } catch (error) {
         console.error('Erro ao deletar cliente:', error);
         throw error;
