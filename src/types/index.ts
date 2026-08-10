@@ -65,3 +65,10 @@ export interface PaymentAttempt {
     error_message?: string | null;
     created_at: Date;
 }
+
+export interface IEmailPayload {
+  to: string;
+  subject: string;
+  text: string;
+  html: string;
+}   
