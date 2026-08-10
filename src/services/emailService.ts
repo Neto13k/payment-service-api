@@ -54,4 +54,17 @@ async function sendUpdateEmail(customerName: string, customerEmail: string): Pro
     }
 }
 
-export { sendMail, sendWelcomeEmail, sendUpdateEmail };
+async function sendDeletionEmail(customerName: string, customerEmail: string): Promise<void> {
+    try {
+        await sendMail({
+            to: customerEmail,
+            subject: 'Exclusão de Dados',
+            text: `Olá ${customerName}, seus dados foram excluídos permanentemente com sucesso.`,
+            html: `<h1>Olá ${customerName}!</h1><p>Seus dados foram excluídos permanentemente com sucesso.</p>`
+        });
+    } catch (error) {
+        console.error('Erro ao enviar e-mail de exclusão:', error);
+    }
+}
+
+export { sendMail, sendWelcomeEmail, sendUpdateEmail, sendDeletionEmail };
