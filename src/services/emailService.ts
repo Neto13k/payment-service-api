@@ -28,12 +28,16 @@ try {
 }
 
 async function sendWelcomeEmail(customerName: string, customerEmail: string): Promise<void> {
-    await sendMail({
-        to: customerEmail,
-        subject: 'Bem-vindo!',
-        text: `Olá ${customerName}, é um prazer ter você conosco. Acesse o sistema de pagamentos para começar.`,
-        html: `<h1>Olá ${customerName}!</h1><p>é um prazer ter você conosco. Acesse o sistema de pagamentos para começar.</p>`
-    });
+    try {
+        await sendMail({
+            to: customerEmail,
+            subject: 'Bem-vindo!',
+            text: `Olá ${customerName}, é um prazer ter você conosco. Acesse o sistema de pagamentos para começar.`,
+            html: `<h1>Olá ${customerName}!</h1><p>é um prazer ter você conosco. Acesse o sistema de pagamentos para começar.</p>`
+        });
+    } catch (error) {
+        console.error('Erro ao enviar e-mail de boas-vindas:', error);
+    }
 }
 
 export { sendMail, sendWelcomeEmail };
