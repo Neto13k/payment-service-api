@@ -1,5 +1,6 @@
 import pool from '../db/db'
 import { Customer } from '../types/index'
+import { sendWelcomeEmail } from '../services/emailService'
 
 async function getAllCustomers(): Promise<Customer[]> {
     try {
@@ -27,6 +28,8 @@ async function createCustomer(customer: Customer): Promise<Customer> {
             'INSERT INTO customers (name, email, phone) VALUES ($1, $2, $3) RETURNING *',
             [customer.name, customer.email, customer.phone]
         );
+        // Enviar e-mail de boas-vindas
+        await sendWelcomeEmail(customer.name, customer.email);
         return result.rows[0];
     } catch (error) {
         console.error('Erro ao criar cliente:', error);
