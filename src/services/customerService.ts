@@ -1,6 +1,6 @@
 import pool from '../db/db'
 import { Customer } from '../types/index'
-import { sendWelcomeEmail } from '../services/emailService'
+import { sendWelcomeEmail, sendUpdateEmail } from '../services/emailService'
 
 async function getAllCustomers(): Promise<Customer[]> {
     try {
@@ -43,6 +43,8 @@ async function updateCustomer(id: number, customer: Customer): Promise<Customer 
             'UPDATE customers SET name = $1, email = $2, phone = $3 WHERE id = $4 RETURNING *',
             [customer.name, customer.email, customer.phone, id]
         );
+        // Enviar e-mail de atualização
+        await sendUpdateEmail(customer.name, customer.email);
         return result.rows[0] || null;
     } catch (error) {
         console.error('Erro ao atualizar cliente:', error);
