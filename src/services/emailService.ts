@@ -40,4 +40,18 @@ async function sendWelcomeEmail(customerName: string, customerEmail: string): Pr
     }
 }
 
-export { sendMail, sendWelcomeEmail };
+
+async function sendUpdateEmail(customerName: string, customerEmail: string): Promise<void> {
+    try {
+        await sendMail({
+            to: customerEmail,
+            subject: 'Atualização de Dados',
+            text: `Olá ${customerName}, seus dados foram atualizados com sucesso.`,
+            html: `<h1>Olá ${customerName}!</h1><p>Seus dados foram atualizados com sucesso.</p>`
+        });
+    } catch (error) {
+        console.error('Erro ao enviar e-mail de atualização:', error);
+    }
+}
+
+export { sendMail, sendWelcomeEmail, sendUpdateEmail };
