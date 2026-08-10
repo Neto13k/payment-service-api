@@ -29,7 +29,11 @@ async function createCustomer(customer: Customer): Promise<Customer> {
             [customer.name, customer.email, customer.phone]
         );
         // Enviar e-mail de boas-vindas
-        await sendWelcomeEmail(customer.name, customer.email);
+        try {
+            await sendWelcomeEmail(customer.name, customer.email);
+        } catch (emailError) {
+            console.error('Erro ao enviar e-mail de boas-vindas:', emailError);
+        }
         return result.rows[0];
     } catch (error) {
         console.error('Erro ao criar cliente:', error);
