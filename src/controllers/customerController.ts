@@ -5,7 +5,7 @@ const createCustomer = async (req: Request, res: Response): Promise<void> => {
     try {
         const customer = req.body;
         const newCustomer = await customerService.createCustomer(customer);
-        res.status(201).json(newCustomer);
+        res.status(201).json({ message: 'Cliente criado com sucesso', data: newCustomer });
     } catch (error) {
         console.error('Erro ao criar cliente:', error);
         res.status(500).json({ error: 'Erro ao criar cliente' });
@@ -15,7 +15,7 @@ const createCustomer = async (req: Request, res: Response): Promise<void> => {
 const getAllCustomers = async (req: Request, res: Response): Promise<void> => {
     try {
         const customers = await customerService.getAllCustomers();
-        res.status(200).json(customers);
+        res.status(200).json({ message: 'Clientes encontrados com sucesso', data: customers });
     } catch (error) {
         console.error('Erro ao buscar clientes:', error);
         res.status(500).json({ error: 'Erro ao buscar clientes' });
@@ -27,7 +27,7 @@ const getCustomerById = async (req: Request, res: Response): Promise<void> => {
         const id = parseInt(req.params.id as string, 10);
         const customer = await customerService.getCustomerById(id);
         if (customer) {
-            res.status(200).json(customer);
+            res.status(200).json({ message: 'Cliente encontrado com sucesso', data: customer });
         }
         else {
             res.status(404).json({ error: 'Cliente não encontrado' });
@@ -44,7 +44,7 @@ const updateCustomer = async (req: Request, res: Response): Promise<void> => {
         const customer = req.body;
         const updatedCustomer = await customerService.updateCustomer(id, customer);
         if (updatedCustomer) {
-            res.status(200).json(updatedCustomer);
+            res.status(200).json({ message: 'Cliente atualizado com sucesso', data: updatedCustomer });
         }
         else {
             res.status(404).json({ error: 'Cliente não encontrado' });
