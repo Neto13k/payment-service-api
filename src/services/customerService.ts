@@ -48,7 +48,11 @@ async function updateCustomer(id: number, customer: Customer): Promise<Customer 
             [customer.name, customer.email, customer.phone, id]
         );
         // Enviar e-mail de atualização
-        await sendUpdateEmail(customer.name, customer.email);
+        try {
+            await sendUpdateEmail(customer.name, customer.email);
+        } catch (emailError) {
+            console.error('Erro ao enviar e-mail de atualização:', emailError);
+        }
         return result.rows[0] || null;
     } catch (error) {
         console.error('Erro ao atualizar cliente:', error);
