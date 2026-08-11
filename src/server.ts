@@ -1,12 +1,14 @@
 import dotenv from 'dotenv'
 import express, { Request, Response } from 'express';
 import categoryRoutes from './routes/categoryRoutes';
+import customerRoutes from './routes/customerRoutes';
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-app.use('/categories', categoryRoutes);
+app.use('/categories', categoryRoutes); // Adicionando as rotas de categorias
+app.use('/customers', customerRoutes); // Adicionando as rotas de clientes
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Olá do servidor TypeScript!');
