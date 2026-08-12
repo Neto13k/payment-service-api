@@ -36,8 +36,8 @@ async function createCoupon(coupon: Coupon): Promise<Coupon> {
 async function updateCoupon(id: number, coupon: Coupon): Promise<Coupon | null> {
     try {
         const result = await pool.query(
-            'UPDATE coupons SET code = $1, discount_type = $2, discount_value = $3, expires_at = $4, usage_limit = $5, used_count = $6, active = $7 WHERE id = $8 RETURNING *',
-            [coupon.code, coupon.discount_type, coupon.discount_value, coupon.expires_at, coupon.usage_limit, coupon.used_count, coupon.active, id]
+            'UPDATE coupons SET code = $1, discount_type = $2, discount_value = $3, expires_at = $4, usage_limit = $5, active = $6 WHERE id = $7 RETURNING *',
+            [coupon.code, coupon.discount_type, coupon.discount_value, coupon.expires_at, coupon.usage_limit, coupon.active, id]
         );
         return result.rows[0] || null;
     } catch (error) {
