@@ -5,7 +5,7 @@ const createCategory = async (req: Request, res: Response): Promise<void> => {
     try {
         const category = req.body;
         const newCategory = await categoryService.createCategory(category);
-        res.status(201).json(newCategory);
+        res.status(201).json({ message: 'Categoria criada com sucesso', category: newCategory });
     } catch (error) {
         console.error('Erro ao criar categoria:', error);
         res.status(500).json({ error: 'Erro ao criar categoria' });
@@ -15,7 +15,7 @@ const createCategory = async (req: Request, res: Response): Promise<void> => {
 const getAllCategories = async (req: Request, res: Response): Promise<void> => {
     try {
         const categories = await categoryService.getAllCategories();
-        res.status(200).json(categories);
+        res.status(200).json({ message: 'Categorias encontradas com sucesso', categories });
     } catch (error) {
         console.error('Erro ao buscar categorias:', error);
         res.status(500).json({ error: 'Erro ao buscar categorias' });
@@ -27,7 +27,7 @@ const getCategoryById = async (req: Request, res: Response): Promise<void> => {
         const id = parseInt(req.params.id as string, 10);
         const category = await categoryService.getCategoryById(id);
         if (category) {
-            res.status(200).json(category);
+            res.status(200).json({ message: 'Categoria encontrada com sucesso', category });
         } else {
             res.status(404).json({ error: 'Categoria não encontrada' });
         }
@@ -43,7 +43,7 @@ const updateCategory = async (req: Request, res: Response): Promise<void> => {
         const category = req.body;
         const updatedCategory = await categoryService.updateCategory(id, category);
         if (updatedCategory) {
-            res.status(200).json(updatedCategory);
+            res.status(200).json({ message: 'Categoria atualizada com sucesso', category: updatedCategory });
         } else {
             res.status(404).json({ error: 'Categoria não encontrada' });
         }
