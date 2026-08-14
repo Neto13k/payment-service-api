@@ -24,7 +24,7 @@ async function getOrderById(id: number): Promise<Order | null> {
     }
 }
 
-async function createOrder(order: Order): Promise<Order> {
+async function createOrder(order: Order): Promise<{ order: Order; checkoutUrl: string | null }> {
     try {
         const stripeSession = await stripe.checkout.sessions.create({
             mode : 'payment',
@@ -48,7 +48,7 @@ async function createOrder(order: Order): Promise<Order> {
             'INSERT INTO orders (customer_id, coupon_id, status, subtotal, discount, total, stripe_session_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
             [order.customer_id, order.coupon_id, order.status, order.subtotal, order.discount, order.total, stripe_session_id]
         );
-        return result.rows[0];
+        return { order: result.rows[0], checkoutUrl: stripeSession.url};
     } catch (error) {
         console.error('Erro ao criar pedido:', error);
         throw error;
