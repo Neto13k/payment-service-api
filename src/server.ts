@@ -7,9 +7,13 @@ import couponRoutes from './routes/couponRoutes';
 import orderRoutes from './routes/orderRoutes';
 import orderItemRoutes from './routes/orderItemRoutes';
 import paymentAttemptRoutes from './routes/paymentAttemptRoutes';
+import webhookRoutes from './routes/webhookRoutes';
 dotenv.config();
 
 const app = express();
+
+app.use('/webhooks/stripe', express.raw({ type: 'application/json' }), webhookRoutes); // Adicionando as rotas de webhooks do Stripe
+
 app.use(express.json());
 
 app.use('/categories', categoryRoutes); // Adicionando as rotas de categorias
