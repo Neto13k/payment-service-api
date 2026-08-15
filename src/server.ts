@@ -5,6 +5,7 @@ import customerRoutes from './routes/customerRoutes';
 import productRoutes from './routes/productRoutes';
 import couponRoutes from './routes/couponRoutes';
 import orderRoutes from './routes/orderRoutes';
+import orderItemRoutes from './routes/orderItemRoutes';
 dotenv.config();
 
 const app = express();
@@ -15,6 +16,7 @@ app.use('/customers', customerRoutes); // Adicionando as rotas de clientes
 app.use('/products', productRoutes); // Adicionando as rotas de produtos
 app.use('/coupons', couponRoutes); // Adicionando as rotas de cupons
 app.use('/orders', orderRoutes); // Adicionando as rotas de pedidos
+app.use('/order-items', orderItemRoutes); // Adicionando as rotas de itens de pedido
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Olá do servidor TypeScript!');
