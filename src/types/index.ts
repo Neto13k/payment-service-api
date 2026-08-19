@@ -72,3 +72,12 @@ export interface IEmailPayload {
   text: string;
   html: string;
 }   
+
+export interface CreateOrderInput {
+    customer_id: number;
+    coupon_id?: number | null;
+    items: {
+        product_id: number;
+        quantity: number;
+    }[];
+}
