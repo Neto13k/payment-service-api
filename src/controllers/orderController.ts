@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
+import { CreateOrderInput } from "../types";
 import * as orderService from "../services/orderService";
 
 const createOrder = async (req: Request, res: Response): Promise<void> => {
     try {
-        const order = req.body;
+        const order = req.body as CreateOrderInput;
         const createdOrder = await orderService.createOrder(order);
-        res.status(201).json({ message: "Ordem criada com sucesso", data: createdOrder, checkoutUrl: createdOrder.checkoutUrl });
+        res.status(201).json({ message: "Ordem criada com sucesso", order:createdOrder.order, checkoutUrl: createdOrder.checkoutUrl });
     } catch (error) {
         res.status(500).json({ error: "Erro ao criar ordem" });
     }
